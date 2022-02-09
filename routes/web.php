@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DetailController;
+
 
 
 /*
@@ -15,16 +18,15 @@ use App\Http\Controllers\Admin\DashboardController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// Route::prefix('admin')->group(function () {
-//     Route::get('Admin', [DashboardController::class, 'index']);
-// });
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+Route::get('/detail', [DetailController::class, 'index'])
+    ->name('detail');
 
 
-
-Route::prefix('admin')->namespace('Admin')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-});
+Route::prefix('admin')
+    ->namespace('Admin')
+    ->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])
+            ->name('dashboard');
+    });
