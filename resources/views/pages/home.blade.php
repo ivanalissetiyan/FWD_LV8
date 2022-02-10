@@ -64,7 +64,7 @@
                             <div class="travel-country">Indonesia</div>
                             <div class="travel-location">Keraton Yogyakarta</div>
                             <div class="travel-button mt-auto">
-                                <a href="details.html" class="btn btn-travel-details px-4">View Details</a>
+                                <a href="{{ route('detail') }}" class="btn btn-travel-details px-4">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                             <div class="travel-country">Indonesia</div>
                             <div class="travel-location">Candi Prambanan Yogyakarta</div>
                             <div class="travel-button mt-auto">
-                                <a href="#" class="btn btn-travel-details px-4">View Details</a>
+                                <a href="{{ route('detail') }}" class="btn btn-travel-details px-4">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -84,7 +84,7 @@
                             <div class="travel-country">Indonesia</div>
                             <div class="travel-location">Pantai Pulang Sawal Yogyakarta</div>
                             <div class="travel-button mt-auto">
-                                <a href="#" class="btn btn-travel-details px-4">View Details</a>
+                                <a href="{{ route('detail') }}" class="btn btn-travel-details px-4">View Details</a>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                             <div class="travel-country">Indonesia</div>
                             <div class="travel-location">Gembira Loka Yogyakarta</div>
                             <div class="travel-button mt-auto">
-                                <a href="#" class="btn btn-travel-details px-4">View Details</a>
+                                <a href="{{ route('detail') }}" class="btn btn-travel-details px-4">View Details</a>
                             </div>
                         </div>
                     </div>

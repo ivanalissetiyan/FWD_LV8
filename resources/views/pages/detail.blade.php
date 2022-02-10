@@ -149,7 +149,7 @@
                             <p>Harga paket dapat berubah-ubah setiap saat tanpa pemberitahuan terlebih dahulu. </p>
                         </div>
                         <div class="join-container">
-                            <a href="checkout.html" class="btn btn-block btn-join-now mt-3 py-2">
+                            <a href="{{ route('checkout') }}" class="btn btn-block btn-join-now mt-3 py-2">
                                 Daftar Sekarang
                             </a>
                         </div>
