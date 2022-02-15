@@ -30,27 +30,27 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($datas as $data)
+                            @forelse ($items as $item)
                                 <tr>
-                                    <th>{{ $data->id }}</th>
-                                    <th>{{ $data->title }}</th>
-                                    <th>{{ $data->location }}</th>
-                                    <th>{{ $data->type }}</th>
-                                    <th>{{ $data->departure_date }}</th>
-                                    <th>{{ $item->type }}</th>
+                                    <td>{{ $item->id }}</td>
+                                    <td>{{ $item->title }}</td>
+                                    <td>{{ $item->location }}</td>
+                                    <td>{{ $item->type }}</td>
+                                    <td>{{ $item->departure_date }}</td>
+                                    <td>{{ $item->type }}</td>
                                     <td>
                                         <a href="{{ route('travel-package.edit', $item->id) }}" class="btn btn-info">
                                             <i class="fa fa-pencil-alt"></i>
                                         </a>
+                                        <form action="{{ route('travel-package.destroy', $item->id) }}" method="post"
+                                            class="d-inline">
+                                            @csrf
+                                            @method('delete')
+                                            <button class="btn btn-danger">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </td>
-                                    <form action="{{ route('travel-package.destroy'), $item->id }}" method="post"
-                                        class="d-inline">
-                                        @csrf
-                                        @method('delete')
-                                        <button class="btn btn-danger">
-                                            <i class="fa fa-trash"></i>
-                                        </button>
-                                    </form>
                                 </tr>
                             @empty
                                 <tr>

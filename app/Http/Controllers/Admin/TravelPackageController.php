@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\TravelPackage;
+use App\Http\Requests\Admin\TravelPackageRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TravelPackageController extends Controller
 {
@@ -15,9 +17,9 @@ class TravelPackageController extends Controller
      */
     public function index()
     {
-        $datas = TravelPackage::all();
+        $items = TravelPackage::all();
         return view('pages.admin.travel-package.index', [
-            'datas' => $datas
+            'items' => $items
         ]);
     }
 
@@ -28,7 +30,7 @@ class TravelPackageController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.admin.travel-package.create');
     }
 
     /**
@@ -37,9 +39,13 @@ class TravelPackageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TravelPackageRequest $request)
     {
-        //
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->title);
+
+        TravelPackage::create($data);
+        return redirect()->route('travel-package.index');
     }
 
     /**
