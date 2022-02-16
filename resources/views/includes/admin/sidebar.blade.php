@@ -11,7 +11,7 @@
      <hr class="sidebar-divider my-0">
 
      <!-- Nav Item - Dashboard -->
-     <li class="nav-item active">
+     <li class="nav-item">
          <a class="nav-link" href="{{ route('dashboard') }}">
              <i class="fas fa-fw fa-tachometer-alt"></i>
              <span>Dashboard</span></a>
@@ -24,7 +24,7 @@
      </li>
 
      <li class="nav-item">
-         <a class="nav-link" href="index.html">
+         <a class="nav-link" href="{{ route('gallery.index') }}">
              <i class="fas fa-fw fa-hotel"></i>
              <span>Galeri Travel</span></a>
      </li>
