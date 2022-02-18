@@ -24,54 +24,31 @@
                 <div class="row">
                     <div class="col-lg-8 pl-lg-0">
                         <div class="card card-details">
-                            <h1>Candi Prambanan</h1>
+                            <h1>{{ $item->title }}</h1>
                             <p>
-                                Indonesia
+                                {{ $item->location }}
                             </p>
-                            <div class="gallery">
-                                <div class="xzoom-container">
-                                    <img src="{{ url('frontend/images/details-1.jpeg') }}" class="xzoom"
-                                        id="xzoom-default" height="380"
-                                        xoriginal="{{ url('frontend/images/details-1.jpeg') }}">
+                            @if ($item->galleries->count())
+                                <div class="gallery">
+                                    <div class="xzoom-container">
+                                        <img src="{{ Storage::url($item->galleries->first()->image) }}"
+                                            class="xzoom" id="xzoom-default"
+                                            xoriginal="{{ Storage::url($item->galleries->first()->image) }}" />
+                                    </div>
+                                    <div class="xzoom-thumbs">
+                                        @foreach ($item->galleries as $gallery)
+                                            <a href="{{ Storage::url($gallery->image) }}">
+                                                <img src="{{ Storage::url($gallery->image) }}" class="xzoom-gallery"
+                                                    width="128" xpreview="{{ Storage::url($gallery->image) }}">
+                                            </a>
+                                        @endforeach
+
+                                    </div>
                                 </div>
-                                <div class="xzoom-thumbs">
-                                    <a href="{{ url('frontend/images/details-1.jpeg') }}">
-                                        <img src="{{ url('frontend/images/details-1.jpeg') }}" class="xzoom-gallery"
-                                            width="128" height="74"
-                                            xpreview="{{ url('frontend/images/details-1.jpeg') }}">
-                                    </a>
-                                    <a href="{{ url('frontend/images/details-2.jpg') }}">
-                                        <img src="{{ url('frontend/images/details-2.jpg') }}" class="xzoom-gallery"
-                                            width="128" height="74" xpreview="{{ url('frontend/images/details-2.jpg') }}">
-                                    </a>
-                                    <a href="{{ url('frontend/images/details-3.jpg') }}">
-                                        <img src="{{ url('frontend/images/details-3.jpg') }}" class="xzoom-gallery"
-                                            width="128" height="74"
-                                            xpreview="{{ url('frontend/images/details-3.jpg') }}">
-                                    </a>
-                                    <a href="{{ url('frontend/images/details-4.jpg') }}">
-                                        <img src="{{ url('frontend/images/details-4.jpg') }}" class="xzoom-gallery"
-                                            width="128" height="74"
-                                            xpreview="{{ url('frontend/images/details-4.jpg') }}">
-                                    </a>
-                                    <a href="{{ url('frontend/images/details-5.jpg') }}">
-                                        <img src="{{ url('frontend/images/details-5.jpg') }}" class="xzoom-gallery"
-                                            width="128" height="74"
-                                            xpreview="{{ url('frontend/images/details-5.jpg') }}">
-                                    </a>
-                                </div>
-                            </div>
+                            @endif
                             <h2>Tentang Wisata di Yogjakarta</h2>
                             <p>
-                                Candi Prambanan terletak di desa Bokoharjo, Kecamatan Prambanan, Kabupaten Sleman
-                                Jogjakarta. Berbeda dengan sejarah asli Candi Prambanan, nama dari candi ini sudah melegenda
-                                lewat kisah cinta tak sampai antara Bandung Bandawasa dan Rara Jongrang.
-                            </p>
-                            <p>
-                                Salah satu candi yang terkenal di tanah air kita tercinta adalah Candi Prambanan. Candi yang
-                                merupakan candi bagi umat Hindu ini memiliki gaya arsitektural yang berbeda dengan Candi
-                                Borobudur. Namun tentu saja, Wisata Candi Prambanan tidak kalah keindahannya dibanding Candi
-                                Borobudur maupun candi Angkor Wat.
+                                {!! $item->about !!}
                             </p>
                             <div class="features row">
                                 <div class="col-md-4">
@@ -79,8 +56,8 @@
                                         <img src="{{ url('frontend/images/tour-guide.png') }}" alt=""
                                             class="features-image">
                                         <div class="description">
-                                            <h3>Guide</h3>
-                                            <p>Professional Guide</p>
+                                            <h3>Nama Acara</h3>
+                                            <p>{{ $item->featured_event }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -88,8 +65,8 @@
                                     <div class="description">
                                         <img src="{{ url('frontend/images/water.png') }}" alt="" class="features-image">
                                         <div class="description">
-                                            <h3>Water</h3>
-                                            <p>Fresh Water</p>
+                                            <h3>Language</h3>
+                                            <p>{{ $item->language }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -97,8 +74,8 @@
                                     <div class="description">
                                         <img src="{{ url('frontend/images/snack.png') }}" alt="" class="features-image">
                                         <div class="description">
-                                            <h3>Local Snack</h3>
-                                            <p>Unique local snack</p>
+                                            <h3>Makanan</h3>
+                                            <p>{{ $item->foods }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -122,25 +99,25 @@
                                 <tr>
                                     <th width="50%">Pilih Tanggal</th>
                                     <td width="50%" class="text-right">
-                                        04 Aug, 2021
+                                        {{ \Carbon\Carbon::create($item->departure_date)->format('F n, Y') }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="50%">Durasi Trip</th>
                                     <td width="50%" class="text-right">
-                                        1 Hari
+                                        {{ $item->duration }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="50%">Tipe</th>
                                     <td width="50%" class="text-right">
-                                        Grup Trip (Max 2 Orang)
+                                        {{ $item->type }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="50%">Harga</th>
                                     <td width="50%" class="text-right">
-                                        Rp.500.000 / Paket
+                                        Rp. {{ $item->price }} / Orang
                                     </td>
                                 </tr>
                             </table>
@@ -148,11 +125,21 @@
                             <h2>Catatan:</h2>
                             <p>Harga paket dapat berubah-ubah setiap saat tanpa pemberitahuan terlebih dahulu. </p>
                         </div>
-                        <div class="join-container">
-                            <a href="{{ route('checkout') }}" class="btn btn-block btn-join-now mt-3 py-2">
-                                Daftar Sekarang
-                            </a>
-                        </div>
+                        @auth
+                            <form action="" method="POST">
+                                <button class="btn btn-block btn-join-now mt-3 py-2" type="submit">
+                                    Join now
+                                </button>
+                            </form>
+                        @endauth
+
+                        @guest
+                            <div class="join-container">
+                                <a href="{{ route('login') }}" class="btn btn-block btn-join-now mt-3 py-2">
+                                    Login or Register to Join
+                                </a>
+                            </div>
+                        @endguest
                     </div>
                 </div>
 
