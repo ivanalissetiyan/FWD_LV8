@@ -32,7 +32,7 @@ Route::post('/checkout/{id}', [CheckoutController::class, 'process'])
     ->name('checkout-process')
     ->middleware(['auth', 'verified']);
 
-Route::post('/checkout/{id}', [CheckoutController::class, 'index'])
+Route::get('/checkout/{id}', [CheckoutController::class, 'index'])
     ->name('checkout')
     ->middleware(['auth', 'verified']);
 

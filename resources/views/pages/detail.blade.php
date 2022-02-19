@@ -126,7 +126,8 @@
                             <p>Harga paket dapat berubah-ubah setiap saat tanpa pemberitahuan terlebih dahulu. </p>
                         </div>
                         @auth
-                            <form action="" method="POST">
+                            <form action="{{ route('checkout-process', $item->id) }}" method="post">
+                                @csrf
                                 <button class="btn btn-block btn-join-now mt-3 py-2" type="submit">
                                     Join now
                                 </button>
