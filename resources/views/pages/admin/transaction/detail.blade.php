@@ -60,7 +60,7 @@
                                         <td>{{ $detail->id }}</td>
                                         <td>{{ $detail->username }}</td>
                                         <td>{{ $detail->nationality }}</td>
-                                        <td>{{ $detail->is_visa ? '30 days' : 'N/A' }}</td>
+                                        <td>{{ $detail->is_visa ? '1 WEEKS' : '3 DAYS' }}</td>
                                         <td>{{ $detail->doe_passport }}</td>
                                     </tr>
                                 @endforeach

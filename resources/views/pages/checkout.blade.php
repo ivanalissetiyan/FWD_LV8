@@ -29,7 +29,7 @@
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
-                                        @foreach ($errors as $error)
+                                        @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
                                         @endforeach
                                     </ul>
@@ -37,7 +37,8 @@
                             @endif
                             <h1>Saatnya Jelajah</h1>
                             <p>
-                                Perjalanan ke {{ $item->travel_package->title }}, {{ $item->travel_package->location }}
+                                Perjalanan ke {{ $item->travel_package->title }},
+                                {{ $item->travel_package->location }}
                             </p>
                             <div class="attendee">
                                 <table class="table table-responsive-sm text-center">
@@ -62,13 +63,13 @@
                                                     {{ $detail->username }}
                                                 </td>
                                                 <td class="align-middle">
-                                                    {{ $detail->language }}
+                                                    {{ $detail->nationality }}
                                                 </td>
                                                 <td class="align-middle">
-                                                    {{ $detail->is_visa ? '30 Days' : 'N/A' }}
+                                                    {{ $detail->is_visa ? '1 WEEKS' : '3 DAYS' }}
                                                 </td>
                                                 <td class="align-middle">
-                                                    {{ \Carbon\Carbon::createFromData($detail->doe_passport) > \Carbon\Carbon::now() ? 'Active' : 'Inactive' }}
+                                                    {{ \Carbon\Carbon::createFromDate($detail->doe_passport) > \Carbon\Carbon::now() ? 'Active' : 'Inactive' }}
                                                 </td>
                                                 <td class="align-middle">
                                                     <a href="{{ route('checkout-remove', $detail->id) }}">
@@ -89,23 +90,30 @@
                             </div>
                             <div class="member mt-3">
                                 <h2>Tambah Member</h2>
-                                <form class="form-inline">
-                                    <label for="inputUsername" class="sr-only">Nama</label>
-                                    <input type="text" name="inputUsername" class="form-control mb-2 mr-sm-2"
-                                        id="inputUsername" placeholder="Username" />
-                                    <label for="inputVisa" class="sr-only">Visa</label>
-                                    <select name="inputVisa" id="inputVisa" class="custom-select mb-2 mr-sm-2">
+                                <form class="form-inline" method="POST"
+                                    action="{{ route('checkout-create', $item->id) }}">
+                                    @csrf
+                                    <label for="username" class="sr-only">Nama</label>
+                                    <input type="text" name="username" class="form-control mb-2 mr-sm-2" id="username"
+                                        required placeholder="Username" />
+
+                                    <label for="nationality" class="sr-only">Nama</label>
+                                    <input type="text" name="nationality" class="form-control mb-2 mr-sm-2"
+                                        style="width: 50px" id="nationality" required placeholder="NT" />
+
+                                    <label for="is_visa" class="sr-only">Visa</label>
+                                    <select name="is_visa" id="is_visa" required class="custom-select mb-2 mr-sm-2">
                                         <option value="VISA" selected>VISA</option>
-                                        <option value="1 WEEKS">1 WEEKS</option>
-                                        <option value="3 DAYS">3 DAYS</option>
+                                        <option value="1">1 WEEKS</option>
+                                        <option value="0">3 DAYS</option>
                                     </select>
 
-                                    <label for="doePassport" class="sr-only">DOE Passport</label>
+                                    <label for="doe_passport" class="sr-only">DOE Passport</label>
                                     <div class="input-group mb-2 mr-sm-2">
-                                        <input type="text" class="form-control datepicker" id="doePassport"
-                                            placeholder="DOE Passport">
+                                        <input type="text" class="form-control datepicker" name="doe_passport"
+                                            style="width: 120px" id="doe_passport" placeholder="DOE Passport">
                                     </div>
-                                    <button type="button" class="btn btn-add-now mb-2 px-4">
+                                    <button type="submit" class="btn btn-add-now mb-2 px-4">
                                         Add Now
                                     </button>
                                 </form>
@@ -123,32 +131,32 @@
                                 <tr>
                                     <th width="50%">Members</th>
                                     <td width="50%" class="text-right">
-                                        2 Person
+                                        {{ $item->details->count() }} Person
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="50%">Additional VISA</th>
                                     <td width="50%" class="text-right">
-                                        $4 190,00
+                                        $ {{ $item->additional_visa }}, 00
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="50%">Trip Price</th>
                                     <td width="50%" class="text-right">
-                                        $ 80,00 / Person
+                                        $ {{ $item->travel_package->price }} Person
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="50%">Sub Total</th>
                                     <td width="50%" class="text-right">
-                                        $ 280,00
+                                        $ {{ $item->transaction_total }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th width="50%">Total (+Unique Code)</th>
                                     <td width="50%" class="text-right text-total">
-                                        <span class="text-blue">$ 279,</span>
-                                        <span class="text-orange">33</span>
+                                        <span class="text-blue">$ {{ $item->transaction_total }}</span>
+                                        <span class="text-orange">{{ mt_rand(0, 99) }}</span>
                                     </td>
                                 </tr>
                             </table>
@@ -214,6 +222,7 @@
     <script>
         $(document).ready(function() {
             $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd',
                 uiLibrary: 'bootstrap4',
                 icons: {
                     rightIcon: '<img src="{{ url('frontend/images/calendar.png') }}" />'
